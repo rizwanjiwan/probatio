@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" namespace="rizwanjiwan\probatio\storage\propel" defaultPhpNamingMethod="underscore">
+    <table name="visitors" idMethod="native" phpName="Visitors">
+        <column name="id" phpName="Id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true"
+                required="true"/>
+        <column name="created" phpName="Created" type="TIMESTAMP" required="true"/>
+        <column name="updated" phpName="Updated" type="TIMESTAMP" required="true"/>
+        <index name="created">
+            <index-column name="created"/>
+        </index>
+        <index name="updated">
+            <index-column name="updated"/>
+        </index>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8mb4"/>
+            <parameter name="Collate" value="utf8mb4_unicode_ci"/>
+        </vendor>
+    </table>
+    <table name="external_visitors" idMethod="native" phpName="ExternalVisitors">
+        <column name="id" phpName="Id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true"
+                required="true"/>
+        <column name="internal_visitor_id" phpName="InternalVisitorId" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+        <column name="external_visitor_id" phpName="ExternalVisitorId" type="VARCHAR" size="127" required="true"/>
+        <column name="external_id_type" phpName="ExternalIdType" type="VARCHAR" size="127" required="true"/>
+        <column name="expires" phpName="Expires" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+        <column name="created" phpName="Created" type="TIMESTAMP" required="true"/>
+        <column name="updated" phpName="Updated" type="TIMESTAMP" required="true"/>
+        <foreign-key foreignTable="visitors" phpName="InternalVisitors" refPhpName="ExternalVisitors">
+            <reference local="internal_visitor_id" foreign="id"/>
+        </foreign-key>
+        <index name="external_visitor_id">
+            <index-column name="external_visitor_id"/>
+        </index>
+        <index name="internal_visitor_id">
+            <index-column name="internal_visitor_id"/>
+        </index>
+        <index name="external_id_type">
+            <index-column name="external_id_type"/>
+        </index>
+        <index name="expires">
+            <index-column name="expires"/>
+        </index>
+        <index name="created">
+            <index-column name="created"/>
+        </index>
+        <index name="updated">
+            <index-column name="updated"/>
+        </index>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8mb4"/>
+            <parameter name="Collate" value="utf8mb4_unicode_ci"/>
+        </vendor>
+    </table>
+
+    <table name="tests" idMethod="native" phpName="Tests">
+        <column name="id" phpName="Id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true"
+                required="true"/>
+        <column name="test_name" phpName="TestName" type="VARCHAR" size="127"/>
+        <column name="created" phpName="Created" type="TIMESTAMP" required="true"/>
+        <column name="updated" phpName="Updated" type="TIMESTAMP" required="true"/>
+        <index name="test_name">
+            <index-column name="test_name"/>
+        </index>
+        <index name="created">
+            <index-column name="created"/>
+        </index>
+        <index name="updated">
+            <index-column name="updated"/>
+        </index>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8mb4"/>
+            <parameter name="Collate" value="utf8mb4_unicode_ci"/>
+        </vendor>
+    </table>
+
+    <table name="variants" idMethod="native" phpName="Variants">
+        <column name="id" phpName="Id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true"
+                required="true"/>
+        <column name="test_id" phpName="testId" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+        <column name="variant_name" phpName="VariantName" type="VARCHAR" size="127" required="true"/>
+        <column name="metadata" phpName="Metadata" type="VARCHAR" size="127"/>
+        <column name="created" phpName="Created" type="TIMESTAMP" required="true"/>
+        <column name="updated" phpName="Updated" type="TIMESTAMP" required="true"/>
+        <foreign-key foreignTable="tests" phpName="Tests" refPhpName="Variants">
+            <reference local="test_id" foreign="id"/>
+        </foreign-key>
+        <index name="test_id">
+            <index-column name="test_id"/>
+        </index>
+        <index name="variant_name">
+            <index-column name="variant_name"/>
+        </index>
+        <index name="created">
+            <index-column name="created"/>
+        </index>
+        <index name="updated">
+            <index-column name="updated"/>
+        </index>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8mb4"/>
+            <parameter name="Collate" value="utf8mb4_unicode_ci"/>
+        </vendor>
+    </table>
+
+    <table name="assigned_variants" idMethod="native" phpName="AssignedVariants">
+        <column name="id" phpName="Id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true"
+                required="true"/>
+        <column name="internal_visitor_id" phpName="InternalVisitorId" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+        <column name="variant_id" phpName="VariantId" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+        <column name="created" phpName="Created" type="TIMESTAMP" required="true"/>
+        <column name="updated" phpName="Updated" type="TIMESTAMP" required="true"/>
+        <foreign-key foreignTable="visitors" phpName="Visitors" refPhpName="AssignedVariants">
+            <reference local="internal_visitor_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="variants" phpName="Variants" refPhpName="AssignedVariants">
+            <reference local="variant_id" foreign="id"/>
+        </foreign-key>
+        <index name="internal_visitor_id">
+            <index-column name="internal_visitor_id"/>
+        </index>
+        <index name="variant_id">
+            <index-column name="variant_id"/>
+        </index>
+        <index name="updated">
+            <index-column name="updated"/>
+        </index>
+        <index name="created">
+            <index-column name="created"/>
+        </index>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8mb4"/>
+            <parameter name="Collate" value="utf8mb4_unicode_ci"/>
+        </vendor>
+    </table>
+</database>

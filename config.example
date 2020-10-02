@@ -1,0 +1,24 @@
+#Db to write to
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_LOGIN=login
+DB_PASSWORD=password
+DB_DATABASE=probatio
+
+SERVER_DOMAIN=https://probaito.test/
+API_KEYS=key1,key2
+
+#paths and namespaces
+LOG_FILE=/../../../../../logs/log
+CACHE_DIR=/../../../../../tmp/cache/
+VIEW_DIR=/../../../../../src/views/
+TMP_DIR=/../../../../../tmp/
+CONTROLER_NAMESPACE=rizwanjiwan\probatio\controllers\
+
+#what env is this? (dev or prod)
+ENV=dev
+FORCE_HTTPS=false
+
+#debug level
+LOG_LEV=INFO
+

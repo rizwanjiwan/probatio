@@ -1,0 +1,16 @@
+{
+  "require":
+  {
+    "rizwanjiwan/commonpub":"dev-main",
+    "propel/propel": "~2.0@dev",
+    "ext-json": "*",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "rizwanjiwan\\probatio\\": "src/rizwanjiwan/probatio"
+    }
+  },
+  "name": "rizwanjiwan/probatio",
+  "description": "Service to provide testing dice rolling and persistence"
+}
