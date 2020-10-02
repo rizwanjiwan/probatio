@@ -100,7 +100,7 @@ Server Setup:
 6. Setup your config file by copying the exmple config and then modifying the values as you need (comments are inside the config file describing all the values). `cp config.example config` Be sure to set strong API keys.
 7. Wire up your webserver to point to the www directory
 
-Enjoy! Use the examples below to use the service or run test.php from the console to just make sure everything works.
+Enjoy! Use the examples above to use the service or run test.php from the console to just make sure everything works.
 
 ---
 
