@@ -59,7 +59,7 @@ $rolldice->test_name=$testSetup->test_name;
 $variantAssigned=$client->rollDice($rolldice);
 echo "User assigned: ".json_encode($variantAssigned);
 
-//pretend they hit the prod site but we have no cookie link but we could have had a hand-off between teh sites as well which would be included in the association below
+//pretend they hit the app but we have no cookie link but we could have had a hand-off between the sites as well which would be included in the association below
 $visitorByProdId=new VisitorIdPayload();
 $visitorByProdId->id=$userIdOnProd;
 $visitorByProdId->type='prod_id';
