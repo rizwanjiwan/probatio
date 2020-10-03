@@ -102,6 +102,8 @@ Server Setup:
 
 Enjoy! Use the examples above to use the service or run test.php from the console to just make sure everything works.
 
+Note: there's an .htaccess file in the www directory which will work on apache with modrewrite. If you're using something else, you'll have to figure out how to send all web requests to wwww/index.php.
+
 ---
 
 Server Update:
