@@ -14,6 +14,10 @@ use rizwanjiwan\probatio\payloads\v1\VariantsPayload;
 abstract class AbstractClient
 {
 
+    const CREATE_ACTIVITY='create';
+    const ROLL_DICE_ACTIVITY='rolldice';
+    const ASSOCIATE_ACTIVITY='associate';
+
     /**
      * Create a new test
      * @param $payload CreatePayload the payload to send
@@ -22,7 +26,7 @@ abstract class AbstractClient
      */
     public function createTest($payload)
     {
-        $result=$this->makeApiCall('create',$payload);
+        $result=$this->makeApiCall(self::CREATE_ACTIVITY,$payload);
         if($result->error===true)
         {
             /**@var $result ErrorPayload*/
@@ -39,7 +43,7 @@ abstract class AbstractClient
      */
     public function rollDice($payload)
     {
-        $result=$this->makeApiCall('rolldice',$payload);
+        $result=$this->makeApiCall(self::ROLL_DICE_ACTIVITY,$payload);
         if($result->error===true)
         {
             /**@var $result ErrorPayload*/
@@ -57,7 +61,7 @@ abstract class AbstractClient
      */
     public function associate($payload)
     {
-        $result=$this->makeApiCall('associate',$payload);
+        $result=$this->makeApiCall(self::ASSOCIATE_ACTIVITY,$payload);
         if($result->error===true)
         {
             /**@var $result ErrorPayload*/
@@ -68,7 +72,7 @@ abstract class AbstractClient
 
     /**
      * Make an API call to the probatio server
-     * @param $activity string the activity you're trying to do. e.g. if you're trying ot hit '/api/create/' just pass 'create'
+     * @param $activity string the activity you're trying to do. e.g. pass self::CREATE_ACTIVITY etc.
      * @param $payload GenericPayload or subclass
      * @return GenericPayload
      */
