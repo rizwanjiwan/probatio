@@ -18,7 +18,7 @@ class ApiKeyFilter implements Filter
 {
 
     use NameableTrait;
-    const HEADER='probatio-api-key';
+    const HEADER_IN_SERVER_VAR='HTTP_PROBATIO_API_KEY';
 
     private static $testmode=false;//set to true to skip any filtering while testing
 
@@ -26,10 +26,10 @@ class ApiKeyFilter implements Filter
     {
         if(self::$testmode)
             return;//skip all checks
-        $headers=getallheaders();
-        if(array_key_exists(self::HEADER,$headers))
+
+        if(array_key_exists(self::HEADER_IN_SERVER_VAR,$_SERVER))
         {
-            $providedKey=$headers[self::HEADER];
+            $providedKey=$_SERVER[self::HEADER_IN_SERVER_VAR];
             $validKeys=Config::getArray('API_KEYS');
             if(array_search($providedKey,$validKeys)!==false)
                 return;//passes
