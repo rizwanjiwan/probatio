@@ -1,6 +1,7 @@
 <?php
 namespace rizwanjiwan\probatio\controllers;
 
+use Monolog\Logger;
 use rizwanjiwan\common\classes\LogManager;
 use rizwanjiwan\common\classes\NameableContainer;
 use rizwanjiwan\common\web\AbstractController;
@@ -18,20 +19,36 @@ class ApiController extends AbstractController
 {
 
     /**
+     * @var Logger
+     */
+    private $log;
+
+    public function __construct()
+    {
+        $this->log=LogManager::createLogger('ApiController');
+    }
+
+    /**
+     * Get the payload from an API call
+     * @return GenericPayload
+     */
+    private function getPayload()
+    {
+        $input=trim(file_get_contents('php://input'));
+        return json_decode($input);
+    }
+
+    /**
      * Create a new test
      * @param $request Request
      * @param  $payload null|CreatePayload override reading the payload from a web request (used for testing)
      */
     public function create($request,$payload=null)
     {
-        $log=LogManager::createLogger('ApiController');
         try
         {
             if($payload===null)
-            {
-                $input=trim(file_get_contents('php://input'));
-                $payload=json_decode($input);
-            }
+                $payload=$this->getPayload();
             /**@var $payload CreatePayload*/
             StorageFactory::get()->createTest($payload);
             $request->respondJson(new GenericPayload());
@@ -39,7 +56,7 @@ class ApiController extends AbstractController
         catch(Exception $e) //failure is an option
         {
             self::generateApiError($request,$e->getMessage());
-            $log->error($e->getMessage()." -> ".$e->getTraceAsString());
+            $this->log->error($e->getMessage()." -> ".$e->getTraceAsString());
         }
     }
 
@@ -50,14 +67,10 @@ class ApiController extends AbstractController
      */
     public function rolldice($request,$payload=null)
     {
-        $log=LogManager::createLogger('ApiController');
         try
         {
             if($payload===null)
-            {
-                $input=trim(file_get_contents('php://input'));
-                $payload=json_decode($input);
-            }
+                $payload=$this->getPayload();
             /**@var $payload RollDicePayload*/
             $storage=StorageFactory::get();
             $visitorId=$storage->getOrCreateVisitor($payload->visitor);
@@ -67,7 +80,7 @@ class ApiController extends AbstractController
         catch(Exception $e) //failure is an option
         {
             self::generateApiError($request,$e->getMessage());
-            $log->error($e->getMessage()." -> ".$e->getTraceAsString());
+            $this->log->error($e->getMessage()." -> ".$e->getTraceAsString());
         }
     }
 
@@ -78,14 +91,10 @@ class ApiController extends AbstractController
      */
     public function associate($request,$payload=null)
     {
-        $log=LogManager::createLogger('ApiController');
         try
         {
             if($payload===null)
-            {
-                $input=trim(file_get_contents('php://input'));
-                $payload=json_decode($input);
-            }
+                $payload=$this->getPayload();
             /**@var $payload AssociatePayload*/
             StorageFactory::get()->associate($payload->visitorId,$payload->linkToId);
             $request->respondJson(new GenericPayload());
@@ -93,7 +102,7 @@ class ApiController extends AbstractController
         catch(Exception $e) //failure is an option
         {
             self::generateApiError($request,$e->getMessage());
-            $log->error($e->getMessage()." -> ".$e->getTraceAsString());
+            $this->log->error($e->getMessage()." -> ".$e->getTraceAsString());
         }
     }
 
